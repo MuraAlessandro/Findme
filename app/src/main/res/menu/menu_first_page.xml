@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.ale.findme.firstPage">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:title="@string/action1"
+        android:orderInCategory="101"
+        android:id="@+id/action1" />
+    <item
+        android:title="@string/action2"
+        android:orderInCategory="102"
+        android:id="@+id/action2" />
+</menu>
