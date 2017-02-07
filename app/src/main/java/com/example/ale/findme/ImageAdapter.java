@@ -11,6 +11,8 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class ImageAdapter extends BaseAdapter {
@@ -51,8 +53,14 @@ public class ImageAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
-        Bitmap myBitmap = BitmapFactory.decodeFile(list.get(position).getPhotoPath());
+        Bitmap myBitmap = null;
+        try {
+            myBitmap = BitmapFactory.decodeStream(new FileInputStream(list.get(position).getPhotoPath()));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         imageView.setImageBitmap(myBitmap);
+
 
       /*  view = inflter.inflate(R.layout.activity_first_page, null);//set layout for displaying items
         ImageView icon = (ImageView) view.findViewById(R.id.icon);//get id for image view
