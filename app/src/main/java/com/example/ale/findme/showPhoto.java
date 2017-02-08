@@ -101,7 +101,7 @@ public class showPhoto extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
 
-
+                               // editText.setError("Errore");
 
                                 finish();
                             }

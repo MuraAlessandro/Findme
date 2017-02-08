@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -48,7 +49,7 @@ public class firstPage extends AppCompatActivity {
 
 
 
-        File inFile=new File("sdcard/Android/data/findme/data.txt");
+        File inFile=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)+"/data.txt");
         TextView nomeView = (TextView) findViewById(R.id.text);
             if(inFile.exists()) {
                 Scanner in = null;

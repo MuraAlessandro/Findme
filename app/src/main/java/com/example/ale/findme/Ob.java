@@ -1,5 +1,7 @@
 package com.example.ale.findme;
 
+import android.os.Environment;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -76,7 +78,7 @@ public class Ob {
     {
         String Enter = System.getProperty("line.separator");
 
-        PrintWriter out=new PrintWriter("/sdcard/Android/data/findme/data.txt");
+        PrintWriter out=new PrintWriter(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)+"/data.txt");
 
 
         for (Ob o: list)
@@ -96,7 +98,7 @@ public class Ob {
     static ArrayList<Ob> printList() throws FileNotFoundException
     {
         ArrayList<Ob> list= new ArrayList<Ob>();
-        File inFile=new File("sdcard/Android/data/findme/data.txt");
+        File inFile=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)+"/data.txt");
         if(inFile.exists())
         {
             Scanner in=new Scanner(inFile);
