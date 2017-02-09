@@ -6,4 +6,5 @@
     <string name="action2">Report</string>
     <string name="tg">Aggiungi Tag</string>
     <string name="action_delete">Elimina foto</string>
+    <string name="title_activity_new_photo">newPhoto</string>
 </resources>

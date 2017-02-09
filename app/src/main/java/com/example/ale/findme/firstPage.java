@@ -43,11 +43,9 @@ public class firstPage extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        File folder = new File("sdcard/Android/data/findme");
+        File folder = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)));
         if (!folder.exists())
              folder.mkdir();//se la cartella non esiste viene creata
-
-
 
         File inFile=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)+"/data.txt");
         TextView nomeView = (TextView) findViewById(R.id.text);
@@ -165,6 +163,13 @@ public class firstPage extends AppCompatActivity {
                 alert.show();
 
                 return true;
+
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
             }
         });

@@ -190,6 +190,19 @@ public class Ob {
 
         return listWithoutOb;
     }
+    static Ob objectById(ArrayList<Ob> list, int id)
+    {
+        for (Ob o: list)
+        {
+            if (id==o.getId())
+            {
+                return o;
+            }
+        }
+        return null;
+
+
+    }
 
 
 

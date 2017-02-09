@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import static com.example.ale.findme.Ob.addTagMethod;
+import static com.example.ale.findme.Ob.objectById;
 import static com.example.ale.findme.Ob.printList;
 import static com.example.ale.findme.Ob.printTag;
 
@@ -36,13 +37,19 @@ public class showPhoto extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_photo);
 
-
+        ArrayList<Ob> l = new ArrayList<Ob>();
         ArrayList<String> tags = new ArrayList<>();
         Ob object = new Ob();
         object.setId(getIntent().getExtras().getInt("objectId"));
         object.setPhotoPath(getIntent().getExtras().getString("objectPath"));
         object.setTags(getIntent().getExtras().getString("objectTags"));
         Global.object=object;
+        try {
+            l=printList();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Global.object=objectById(l,getIntent().getExtras().getInt("objectId"));
 
         Bitmap myBitmap = BitmapFactory.decodeFile(object.getPhotoPath());
         ImageView myImage = (ImageView) findViewById(R.id.image);
@@ -57,11 +64,11 @@ public class showPhoto extends AppCompatActivity {
 
     }
 
-    @Override
+  /*  @Override
     public void onBackPressed(){
         finish();
     }
-
+*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -103,7 +110,7 @@ public class showPhoto extends AppCompatActivity {
 
                                // editText.setError("Errore");
 
-                                finish();
+                                showPhoto.super.recreate();
                             }
                             else if(t.isEmpty())
                             {
