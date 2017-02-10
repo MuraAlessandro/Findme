@@ -102,6 +102,8 @@ public class firstPage extends AppCompatActivity {
 
 
         final ArrayList<Ob> finalList = list;
+
+
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id)
