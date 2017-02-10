@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
@@ -41,6 +42,9 @@ public class firstPage extends AppCompatActivity {
         setContentView(R.layout.activity_first_page);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //Controllo la versione delle API e richiedo il permesso a runtime
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         File folder = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)));
@@ -175,6 +179,7 @@ public class firstPage extends AppCompatActivity {
         });
 
     }
+
     @Override
     public void onBackPressed(){
 
@@ -236,4 +241,5 @@ public class firstPage extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
