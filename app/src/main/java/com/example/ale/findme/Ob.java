@@ -13,7 +13,6 @@ import java.util.Scanner;
  * Created by Ale on 31/01/2017.
  */
 
-
 public class Ob {
 
     private int id;
