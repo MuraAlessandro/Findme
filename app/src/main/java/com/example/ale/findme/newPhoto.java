@@ -1,6 +1,10 @@
 package com.example.ale.findme;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +12,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class newPhoto extends AppCompatActivity {
 
@@ -23,6 +34,20 @@ public class newPhoto extends AppCompatActivity {
         boolean tagFlag=false;
 
 
+        ImageView photo=(ImageView) findViewById(R.id.im);
+        photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // intent implicito, i parametri
+                Intent photocamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                //creo il nome della foto utilizzando la data e l'ora in cui viene fatta
+
+                //photocamera.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(file));
+                startActivityForResult(photocamera,0);
+
+
+            }
+        });
 
 
 
@@ -70,5 +95,27 @@ public class newPhoto extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent databack){
+        Bitmap immagine = (Bitmap) databack.getExtras().get("data"); //intent per recuperare l'immagine
+        //img è un componente imageView presente sul layout
+
+        ImageView img =(ImageView) findViewById(R.id.im);
+        //img.getLayoutParams().width = 700;
+        //img.getLayoutParams().height= 700;
+        img.setImageBitmap(immagine);
+        String timeStamp = (new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()))+".jpg";
+        File file=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),timeStamp);
+        FileOutputStream outptOs = null;
+        try {
+            outptOs = new FileOutputStream( file );
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        immagine.compress( Bitmap.CompressFormat.JPEG, 100, outptOs );
+      /*  Intent pF= new Intent(pageThree.this,pageFourth.class);//definisco l'intenzione
+        startActivity(pF);*/
+
+    }
 
 }
