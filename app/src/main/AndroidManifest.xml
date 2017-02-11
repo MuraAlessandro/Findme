@@ -22,12 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".showPhoto" />
+        <activity android:name=".showPhoto" android:label="@string/vis" />
         <activity android:name=".addTag" />
         <activity
             android:name=".newPhoto"
-            android:label="@string/title_activity_new_photo"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="@string/page_name"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

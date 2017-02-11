@@ -176,6 +176,8 @@ public class firstPage extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent foto= new Intent(firstPage.this,newPhoto.class);
+                startActivity(foto);
 
             }
         });

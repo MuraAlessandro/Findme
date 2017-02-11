@@ -7,4 +7,6 @@
     <string name="tg">Aggiungi Tag</string>
     <string name="action_delete">Elimina foto</string>
     <string name="title_activity_new_photo">newPhoto</string>
+    <string name="page_name">Aggiungi</string>
+    <string name="vis">Visualizza</string>
 </resources>
