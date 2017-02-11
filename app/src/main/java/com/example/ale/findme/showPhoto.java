@@ -39,11 +39,11 @@ public class showPhoto extends AppCompatActivity {
 
         ArrayList<Ob> l = new ArrayList<Ob>();
         ArrayList<String> tags = new ArrayList<>();
-        Ob object = new Ob();
-        object.setId(getIntent().getExtras().getInt("objectId"));
-        object.setPhotoPath(getIntent().getExtras().getString("objectPath"));
-        object.setTags(getIntent().getExtras().getString("objectTags"));
-        Global.object=object;
+        //Ob object = new Ob();
+        //object.setId(getIntent().getExtras().getInt("objectId"));
+       // object.setPhotoPath(getIntent().getExtras().getString("objectPath"));
+       // object.setTags(getIntent().getExtras().getString("objectTags"));
+       // Global.object=object;
         try {
             l=printList();
         } catch (FileNotFoundException e) {
@@ -51,11 +51,11 @@ public class showPhoto extends AppCompatActivity {
         }
         Global.object=objectById(l,getIntent().getExtras().getInt("objectId"));
 
-        Bitmap myBitmap = BitmapFactory.decodeFile(object.getPhotoPath());
+        Bitmap myBitmap = BitmapFactory.decodeFile(Global.object.getPhotoPath());
         ImageView myImage = (ImageView) findViewById(R.id.image);
         myImage.setImageBitmap(myBitmap);
 
-        tags = printTag(object);
+        tags = printTag(Global.object);
 
         ListView myList = (ListView) findViewById(R.id.elenco);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, tags);
@@ -110,7 +110,7 @@ public class showPhoto extends AppCompatActivity {
 
                                // editText.setError("Errore");
 
-                                showPhoto.super.recreate();
+                               showPhoto.super.recreate();
                             }
                             else if(t.isEmpty())
                             {
