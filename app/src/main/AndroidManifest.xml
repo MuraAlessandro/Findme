@@ -22,7 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".showPhoto" android:label="@string/vis" />
+        <activity
+            android:name=".showPhoto"
+            android:label="@string/vis" />
         <activity android:name=".addTag" />
         <activity
             android:name=".newPhoto"

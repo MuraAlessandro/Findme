@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ import static com.example.ale.findme.Ob.printList;
 import static com.example.ale.findme.Ob.printTag;
 
 class Global {public static Ob object;}
+
 
 public class showPhoto extends AppCompatActivity {
 
@@ -52,14 +54,36 @@ public class showPhoto extends AppCompatActivity {
         Global.object=objectById(l,getIntent().getExtras().getInt("objectId"));
 
         Bitmap myBitmap = BitmapFactory.decodeFile(Global.object.getPhotoPath());
-        ImageView myImage = (ImageView) findViewById(R.id.image);
+        final ImageView myImage = (ImageView) findViewById(R.id.image);
         myImage.setImageBitmap(myBitmap);
+        final int x=myImage.getLayoutParams().width;
+        final int y=myImage.getLayoutParams().height;
 
         tags = printTag(Global.object);
 
         ListView myList = (ListView) findViewById(R.id.elenco);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, tags);
         myList.setAdapter(adapter);
+        final boolean[] flagFullscreen = {false};
+
+        myImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+          //  myImage.setScaleType(ImageView.ScaleType.FIT_XY);
+                if(flagFullscreen[0] ==false) {
+                    myImage.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+                    flagFullscreen[0] =true;
+                }
+                else
+                {
+                    myImage.setLayoutParams(new RelativeLayout.LayoutParams(x,y));
+                    flagFullscreen[0] =false;
+                }
+            }
+        });
+
+
+
 
 
 
