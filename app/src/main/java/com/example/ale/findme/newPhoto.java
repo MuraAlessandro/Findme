@@ -101,8 +101,7 @@ public class newPhoto extends AppCompatActivity {
         //img è un componente imageView presente sul layout
 
         ImageView img =(ImageView) findViewById(R.id.im);
-        //img.getLayoutParams().width = 700;
-        //img.getLayoutParams().height= 700;
+
         img.setImageBitmap(immagine);
         String timeStamp = (new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()))+".jpg";
         File file=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),timeStamp);
