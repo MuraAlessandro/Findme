@@ -30,6 +30,7 @@
             android:name=".newPhoto"
             android:label="@string/page_name"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".listview"></activity>
     </application>
 
 </manifest>

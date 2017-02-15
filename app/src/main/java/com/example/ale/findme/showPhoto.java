@@ -60,9 +60,10 @@ public class showPhoto extends AppCompatActivity {
         final int y=myImage.getLayoutParams().height;
 
         tags = printTag(Global.object);
+        
 
         ListView myList = (ListView) findViewById(R.id.elenco);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, tags);
+        tagAdapter adapter = new tagAdapter(tags,this);
         myList.setAdapter(adapter);
         final boolean[] flagFullscreen = {false};
 
@@ -84,17 +85,13 @@ public class showPhoto extends AppCompatActivity {
 
 
 
-
-
-
-
     }
 
-  /*  @Override
+    @Override
     public void onBackPressed(){
         finish();
     }
-*/
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
