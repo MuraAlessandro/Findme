@@ -86,7 +86,7 @@ public class showPhoto extends AppCompatActivity {
 
 
     }
-
+//
     @Override
     public void onBackPressed(){
         finish();
