@@ -156,11 +156,9 @@ public class Ob {
             }
             flag=1;
         }
-        if(flag==1)//per stampare l'ultimo tag
-        {
             s=s.substring(1);
             tags.add(s);
-        }
+
 
         return tags;
     }

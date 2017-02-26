@@ -30,6 +30,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static com.example.ale.findme.Ob.objectById;
 import static com.example.ale.findme.Ob.printList;
 import static com.example.ale.findme.Ob.removeObject;
 import static com.example.ale.findme.Ob.writeList;
@@ -112,9 +113,16 @@ public class firstPage extends AppCompatActivity {
                         finalList.get(position).getPhotoPath(),
                         Toast.LENGTH_SHORT).show();*/
                 Intent openPage= new Intent(firstPage.this,showPhoto.class);//definisco l'intenzione
-                openPage.putExtra("objectPath", finalList.get(position).getPhotoPath());
-                openPage.putExtra("objectTags", finalList.get(position).getTags());
-                openPage.putExtra("objectId", finalList.get(position).getId());
+               // openPage.putExtra("objectPath", finalList.get(position).getPhotoPath());
+               // openPage.putExtra("objectTags", finalList.get(position).getTags());
+               // openPage.putExtra("objectId", finalList.get(position).getId());
+                ArrayList<Ob> l = new ArrayList<Ob>();
+                try {
+                    l=printList();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                Global.object=objectById(l,finalList.get(position).getId());
                 startActivity(openPage);
 
             }
@@ -152,6 +160,7 @@ public class firstPage extends AppCompatActivity {
                                // Intent i=new Intent(firstPage.this,firstPage.class);
                                // i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 firstPage.super.recreate();
+
 
                             }
                         })
@@ -245,5 +254,21 @@ public class firstPage extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        ArrayList<Ob> list= new ArrayList<Ob>();
+
+        try {
+            list=printList();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+
 
 }

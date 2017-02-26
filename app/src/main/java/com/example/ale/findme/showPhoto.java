@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +30,6 @@ import static com.example.ale.findme.Ob.objectById;
 import static com.example.ale.findme.Ob.printList;
 import static com.example.ale.findme.Ob.printTag;
 
-class Global {public static Ob object;}
 
 
 public class showPhoto extends AppCompatActivity {
@@ -51,9 +51,12 @@ public class showPhoto extends AppCompatActivity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        Global.object=objectById(l,getIntent().getExtras().getInt("objectId"));
+       // Global.object=objectById(l,getIntent().getExtras().getInt("objectId"));
 
-        Bitmap myBitmap = BitmapFactory.decodeFile(Global.object.getPhotoPath());
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 8;
+        Bitmap myBitmap = BitmapFactory.decodeFile(Global.object.getPhotoPath(), options);
+        Log.d("GLOBAL", String.valueOf(myBitmap));
         final ImageView myImage = (ImageView) findViewById(R.id.image);
         myImage.setImageBitmap(myBitmap);
         final int x=myImage.getLayoutParams().width;
@@ -132,8 +135,15 @@ public class showPhoto extends AppCompatActivity {
                                 }
 
                                // editText.setError("Errore");
-
-                               showPhoto.super.recreate();
+                               // getIntent().putExtra("objectId", Global.object.getId());
+                               // finish();
+                                try {
+                                    l=printList();
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+                                Global.object=objectById(l,Global.object.getId());
+                                showPhoto.super.recreate();
                             }
                             else if(t.isEmpty())
                             {
@@ -181,5 +191,11 @@ public class showPhoto extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        getIntent().putExtra("objectId", Global.object.getId());
     }
 }

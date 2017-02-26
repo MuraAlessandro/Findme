@@ -53,13 +53,20 @@ public class ImageAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
-        Bitmap myBitmap = null;
+       /* Bitmap myBitmap = null;
         try {
             myBitmap = BitmapFactory.decodeStream(new FileInputStream(list.get(position).getPhotoPath()));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        imageView.setImageBitmap(myBitmap);*/
+        Bitmap myBitmap = null;
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 8;
+        myBitmap = BitmapFactory.decodeFile(list.get(position).getPhotoPath(),options);
         imageView.setImageBitmap(myBitmap);
+
+
 
 
       /*  view = inflter.inflate(R.layout.activity_first_page, null);//set layout for displaying items
