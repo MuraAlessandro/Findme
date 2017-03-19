@@ -83,7 +83,7 @@ public class firstPage extends AppCompatActivity {
             e.printStackTrace();
         }*/
         ArrayList<Ob> list= new ArrayList<Ob>();
-
+        Global.list=list;
          try {
             list=printList();
         } catch (FileNotFoundException e) {
@@ -122,6 +122,7 @@ public class firstPage extends AppCompatActivity {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
+                Global.list=l;
                 Global.object=objectById(l,finalList.get(position).getId());
                 startActivity(openPage);
 
@@ -153,6 +154,7 @@ public class firstPage extends AppCompatActivity {
                                 } catch (FileNotFoundException e) {
                                     e.printStackTrace();
                                 }
+                                Global.list=l;
                                /*Intent i = getBaseContext().getPackageManager()
                                         .getLaunchIntentForPackage( getBaseContext().getPackageName() );
                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

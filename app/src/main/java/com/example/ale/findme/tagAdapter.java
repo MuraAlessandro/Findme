@@ -3,6 +3,7 @@ package com.example.ale.findme;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,11 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import static com.example.ale.findme.Ob.removeTag;
+import static com.example.ale.findme.Ob.writeList;
 
 /**
  * Created by Ale on 12/02/2017.
@@ -75,9 +78,18 @@ public class tagAdapter extends BaseAdapter implements ListAdapter {
                         .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
-                            ArrayList<String> tag=removeTag(list,list.get(position));
-
-
+                                ArrayList<String> tag=removeTag(list,list.get(position));
+                                String tagList="";
+                                for(String x : tag )
+                                    tagList=tagList+" @"+x+" ";
+                                Log.d("AAAA",tagList);
+                                Global.list.get(Global.object.getId()).setTags(tagList);
+                                try {
+                                        writeList(Global.list);
+                                } catch (FileNotFoundException e) {
+                                        e.printStackTrace();
+                                }
+                                ((showPhoto) context).recreate();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {

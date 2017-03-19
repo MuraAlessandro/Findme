@@ -141,6 +141,7 @@ public class Ob {
         ArrayList<String> tags= new ArrayList<String>();
         int flag=0;
         String s=o.getTags();
+        if(s.equals("")) return tags;
         String sub;
         if (s.substring(0,1).equals(" "))//se per qualche motivo il tag inizia con uno spazio allora elimina lo spazio
             s=s.substring(1);

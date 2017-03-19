@@ -62,6 +62,7 @@ public class showPhoto extends AppCompatActivity {
         final int x=myImage.getLayoutParams().width;
         final int y=myImage.getLayoutParams().height;
 
+
         tags = printTag(Global.object);
         
 
@@ -78,8 +79,7 @@ public class showPhoto extends AppCompatActivity {
                     myImage.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
                     flagFullscreen[0] =true;
                 }
-                else
-                {
+                else {
                     myImage.setLayoutParams(new RelativeLayout.LayoutParams(x,y));
                     flagFullscreen[0] =false;
                 }
