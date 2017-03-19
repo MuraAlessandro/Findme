@@ -7,12 +7,24 @@
     android:padding="10dp">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Aggiungi Tag"
+
+        android:layout_marginBottom="10dp"
         android:id="@+id/textView"
         android:textColor="@color/colorPrimary"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Puoi inserire più tag inserendo uno spazio più un @, ecco un esempio: Tag1 @Tg2"
+        android:id="@+id/text"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/black"/>
 
     <EditText
         android:id="@+id/edittext"

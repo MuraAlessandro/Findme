@@ -122,7 +122,9 @@ public class showPhoto extends AppCompatActivity {
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             ArrayList<Ob> l = new ArrayList<Ob>();
+
                             String t = editText.getText().toString().replace(" ", "+-+");//se mantengo lo spazio allora l'editText va in crush
+
 
 
                             if (!t.isEmpty() && !t.equals("+-+"))
@@ -147,11 +149,13 @@ public class showPhoto extends AppCompatActivity {
                             }
                             else if(t.isEmpty())
                             {
+                                editText.setError("Inserisci testo");
                                 Toast toast= Toast.makeText(getApplicationContext(),"Inserisci testo",Toast.LENGTH_LONG);
                                 toast.show();
                             }
                             else if(t.equals("+-+"))
                             {
+                                editText.setError("Tag non valido");
                                 Toast toast= Toast.makeText(getApplicationContext(),"Tag non valido",Toast.LENGTH_LONG);
                                 toast.show();
                             }
