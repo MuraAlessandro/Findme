@@ -8,10 +8,14 @@ import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ButtonBarLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -19,9 +23,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
+import static com.example.ale.findme.Ob.writeList;
+
 public class newPhoto extends AppCompatActivity {
+
+
+    boolean photoFlag=false;
+    String path;
+    ArrayList<Ob> list= new ArrayList<Ob>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +42,7 @@ public class newPhoto extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        boolean fotoFlag=false;
-        boolean tagFlag=false;
-
+        list=Global.list;
 
         ImageView photo=(ImageView) findViewById(R.id.im);
         photo.setOnClickListener(new View.OnClickListener() {
@@ -44,14 +54,47 @@ public class newPhoto extends AppCompatActivity {
 
                 //photocamera.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(file));
                 startActivityForResult(photocamera,0);
+                photoFlag=true;
 
+            }
+        });
 
+        final EditText tag=(EditText) findViewById(R.id.editText);
+
+        ImageView deletePath =(ImageView) findViewById(R.id.imageView3);
+        deletePath.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tag.setText("");
             }
         });
 
 
 
 
+        Button b=(Button) findViewById(R.id.button);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String tg=tag.getText()+"";
+                if(photoFlag && tg.compareTo("")!=0){
+
+                    Ob newElement=new Ob();
+                    newElement.setPhotoPath(path);
+                    newElement.setTags("@"+tg);
+                    list.add(newElement);
+
+                    try {
+                        writeList(list);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    Global.list=list;
+                    finish();
+                }
+            }
+        });
 
 
 
@@ -97,21 +140,26 @@ public class newPhoto extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent databack){
+       // super.onActivityResult(requestCode, resultCode, databack);
+
         Bitmap immagine = (Bitmap) databack.getExtras().get("data"); //intent per recuperare l'immagine
         //img è un componente imageView presente sul layout
 
         ImageView img =(ImageView) findViewById(R.id.im);
 
         img.setImageBitmap(immagine);
-        String timeStamp = (new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()))+".jpg";
+        String timeStamp = (new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()))+".png";
         File file=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),timeStamp);
+        Log.d("file",file+"");
+        path=file+"";
         FileOutputStream outptOs = null;
         try {
             outptOs = new FileOutputStream( file );
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        immagine.compress( Bitmap.CompressFormat.JPEG, 100, outptOs );
+        immagine.compress( Bitmap.CompressFormat.PNG, 100, outptOs );
+
       /*  Intent pF= new Intent(pageThree.this,pageFourth.class);//definisco l'intenzione
         startActivity(pF);*/
 

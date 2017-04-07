@@ -1,6 +1,7 @@
 package com.example.ale.findme;
 
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileNotFoundException;

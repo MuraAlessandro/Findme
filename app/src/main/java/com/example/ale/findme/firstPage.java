@@ -37,6 +37,10 @@ import static com.example.ale.findme.Ob.writeList;
 
 public class firstPage extends AppCompatActivity {
 
+    ArrayList<Ob> list;
+    GridView gridview=null;
+    ArrayList<Ob> finalList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,14 +86,14 @@ public class firstPage extends AppCompatActivity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }*/
-        ArrayList<Ob> list= new ArrayList<Ob>();
-        Global.list=list;
+        list= new ArrayList<Ob>();
+
          try {
             list=printList();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
+        Global.list=list;
 
 
         /*for(Ob z :list)
@@ -98,11 +102,12 @@ public class firstPage extends AppCompatActivity {
             //nomeView.setText(z.getPhotoPath());
 
         }*/
-        final GridView gridview = (GridView) findViewById(R.id.gridview);
+        gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new ImageAdapter(getApplicationContext(),list));
 
 
-        final ArrayList<Ob> finalList = list;
+
+        finalList = list;
 
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -116,7 +121,9 @@ public class firstPage extends AppCompatActivity {
                // openPage.putExtra("objectPath", finalList.get(position).getPhotoPath());
                // openPage.putExtra("objectTags", finalList.get(position).getTags());
                // openPage.putExtra("objectId", finalList.get(position).getId());
+
                 ArrayList<Ob> l = new ArrayList<Ob>();
+
                 try {
                     l=printList();
                 } catch (FileNotFoundException e) {
@@ -162,6 +169,7 @@ public class firstPage extends AppCompatActivity {
                                // Intent i=new Intent(firstPage.this,firstPage.class);
                                // i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 firstPage.super.recreate();
+                                //gridview.setAdapter(new ImageAdapter(getApplicationContext(),Global.list));
 
 
                             }
@@ -260,7 +268,7 @@ public class firstPage extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        ArrayList<Ob> list= new ArrayList<Ob>();
+       // ArrayList<Ob> list= new ArrayList<Ob>();
 
         try {
             list=printList();
@@ -268,7 +276,8 @@ public class firstPage extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
+        gridview.setAdapter(new ImageAdapter(getApplicationContext(),list));
+        finalList = list;
 
     }
 
