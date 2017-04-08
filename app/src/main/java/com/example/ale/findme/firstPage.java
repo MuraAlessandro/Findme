@@ -117,8 +117,13 @@ public class firstPage extends AppCompatActivity {
         gridview.setAdapter(new ImageAdapter(getApplicationContext(),list));
 
 
-
         finalList = list;
+
+
+
+
+
+
 
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -165,7 +170,15 @@ public class firstPage extends AppCompatActivity {
                         .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                // finish();
-                                ArrayList<Ob> l=removeObject(finalList,position);
+
+                                ArrayList<Ob> li=new ArrayList<Ob>();
+                                try {
+                                    li=printList();
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+                                Global.list=li;
+                                ArrayList<Ob> l=removeObject(Global.list,finalList.get(position).getId());
 
                                 try {
                                     writeList(l);
@@ -173,6 +186,7 @@ public class firstPage extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                                 Global.list=l;
+
                                /*Intent i = getBaseContext().getPackageManager()
                                         .getLaunchIntentForPackage( getBaseContext().getPackageName() );
                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -242,7 +256,7 @@ public class firstPage extends AppCompatActivity {
                             searchItem.add(z);
                     }
                 }
-
+                finalList=searchItem;
                 gridview.setAdapter(new ImageAdapter(getApplicationContext(),searchItem));
             }
 
@@ -253,6 +267,7 @@ public class firstPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 search.setText("");
+                finalList=list;
                 gridview.setAdapter(new ImageAdapter(getApplicationContext(),list));
             }
         });
@@ -390,10 +405,6 @@ public class firstPage extends AppCompatActivity {
         ArrayAdapter<String> adapterSearch = new ArrayAdapter<String>(firstPage.this, android.R.layout.simple_dropdown_item_1line, allTags);
         search.setThreshold(1);// number of characters to start the search
         search.setAdapter(adapterSearch);
-
-
-
-
     }
 
 

@@ -144,6 +144,7 @@ public class showPhoto extends AppCompatActivity {
                                 } catch (FileNotFoundException e) {
                                     e.printStackTrace();
                                 }
+                                Global.list=l;
                                 Global.object=objectById(l,Global.object.getId());
                                 showPhoto.super.recreate();
                             }
