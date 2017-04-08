@@ -78,8 +78,15 @@ public class newPhoto extends AppCompatActivity {
             public void onClick(View view) {
 
                 String tg=tag.getText()+"";
+
+                if(!photoFlag)
+                    Toast.makeText(getBaseContext(), "Devi scattare una foto",Toast.LENGTH_LONG).show();
+                if(tg.compareTo("")==0)
+                    tag.setError("Inserisci tag");
+
                 if(photoFlag && tg.compareTo("")!=0){
 
+                    tag.setError(null);
                     Ob newElement=new Ob();
                     newElement.setPhotoPath(path);
                     newElement.setTags("@"+tg);

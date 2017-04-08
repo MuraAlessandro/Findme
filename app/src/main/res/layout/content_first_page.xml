@@ -14,7 +14,25 @@
     tools:showIn="@layout/activity_first_page"
     android:background="@drawable/background">
 
+
+    <AutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/search"
+        android:hint="Cerca foto"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:inputType="textCapSentences"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="15dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:maxLines="1"
+        android:textSize="18dp" />
+
+
     <TextView
+        android:layout_marginTop="60dp"
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,6 +43,7 @@
 
 
         <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_marginTop="60dp"
             android:id="@+id/gridview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -14,6 +14,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +33,7 @@ import java.util.Scanner;
 
 import static com.example.ale.findme.Ob.objectById;
 import static com.example.ale.findme.Ob.printList;
+import static com.example.ale.findme.Ob.printTag;
 import static com.example.ale.findme.Ob.removeObject;
 import static com.example.ale.findme.Ob.writeList;
 
@@ -94,6 +96,23 @@ public class firstPage extends AppCompatActivity {
             e.printStackTrace();
         }
         Global.list=list;
+
+
+        //
+        ArrayList<String> allTags=new ArrayList<String>();
+
+        for(Ob z :list){
+            ArrayList<String> listTags= printTag(z);
+
+            for(String x: listTags){
+                    if(!allTags.contains(x))
+                        allTags.add(x);
+            }
+        }
+
+        for(String p:allTags)
+         Log.d("Tags",p);
+
 
 
         /*for(Ob z :list)
