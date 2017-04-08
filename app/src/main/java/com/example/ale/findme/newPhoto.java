@@ -2,6 +2,8 @@ package com.example.ale.findme;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -30,10 +32,13 @@ import static com.example.ale.findme.Ob.writeList;
 
 public class newPhoto extends AppCompatActivity {
 
-
+    int CAM_REQUEST=11;
     boolean photoFlag=false;
     String path;
     ArrayList<Ob> list= new ArrayList<Ob>();
+
+
+    File file;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +57,13 @@ public class newPhoto extends AppCompatActivity {
                 Intent photocamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 //creo il nome della foto utilizzando la data e l'ora in cui viene fatta
 
-                //photocamera.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(file));
-                startActivityForResult(photocamera,0);
-                photoFlag=true;
+                String timeStamp = (new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())) + ".jpg";
+                file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), timeStamp);
+                path = file + "";
+                photocamera.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(file));
+                startActivityForResult(photocamera,CAM_REQUEST);
+
+
 
             }
         });
@@ -146,30 +155,38 @@ public class newPhoto extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent databack){
-       // super.onActivityResult(requestCode, resultCode, databack);
+    protected void onActivityResult(int requestCode, int resultCode, Intent databack) {
+        // super.onActivityResult(requestCode, resultCode, databack);
+        if(requestCode==CAM_REQUEST && resultCode==RESULT_OK)
+        {
 
-        Bitmap immagine = (Bitmap) databack.getExtras().get("data"); //intent per recuperare l'immagine
-        //img è un componente imageView presente sul layout
+            photoFlag=true;
+            File imgFile = new  File(path);
+            if(imgFile.exists()) {
 
-        ImageView img =(ImageView) findViewById(R.id.im);
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                //intent per recuperare l'immagine
+                //img è un componente imageView presente sul layout
+                ImageView img = (ImageView) findViewById(R.id.im);
+                img.setImageBitmap(myBitmap);
+            }
 
-        img.setImageBitmap(immagine);
-        String timeStamp = (new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()))+".png";
-        File file=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),timeStamp);
-        Log.d("file",file+"");
-        path=file+"";
-        FileOutputStream outptOs = null;
-        try {
-            outptOs = new FileOutputStream( file );
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+
+/*            String timeStamp = (new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())) + ".png";
+            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), timeStamp);
+            Log.d("file", file + "");
+            path = file + "";
+            FileOutputStream outptOs = null;
+            try {
+                outptOs = new FileOutputStream(file);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            immagine.compress(Bitmap.CompressFormat.PNG, 100, outptOs);
+*/
+          /*  Intent pF= new Intent(pageThree.this,pageFourth.class);//definisco l'intenzione
+            startActivity(pF);*/
         }
-        immagine.compress( Bitmap.CompressFormat.PNG, 100, outptOs );
-
-      /*  Intent pF= new Intent(pageThree.this,pageFourth.class);//definisco l'intenzione
-        startActivity(pF);*/
-
     }
 
 }
