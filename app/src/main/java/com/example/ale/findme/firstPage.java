@@ -20,6 +20,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,6 +44,9 @@ public class firstPage extends AppCompatActivity {
     ArrayList<Ob> list;
     GridView gridview=null;
     ArrayList<Ob> finalList;
+    AutoCompleteTextView search=null;
+    TextView nomeView;
+    File inFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +63,8 @@ public class firstPage extends AppCompatActivity {
         if (!folder.exists())
              folder.mkdir();//se la cartella non esiste viene creata
 
-        File inFile=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)+"/data.txt");
-        TextView nomeView = (TextView) findViewById(R.id.text);
+        inFile=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)+"/data.txt");
+        nomeView = (TextView) findViewById(R.id.text);
             if(inFile.exists()) {
                 Scanner in = null;
                 try {
@@ -69,6 +74,7 @@ public class firstPage extends AppCompatActivity {
                 }
                 if (in.hasNextLine()) {
                         //attenzione se viene salvato uno invio o uno spazio allora il file viene considerato pieno
+                    nomeView.setText("");
                 }
                 else
                     nomeView.setText("Benvenuto in FindMe, questa applicazione ti permetterà di realizzare foto e inserirle all'interno");
@@ -98,20 +104,6 @@ public class firstPage extends AppCompatActivity {
         Global.list=list;
 
 
-        //
-        ArrayList<String> allTags=new ArrayList<String>();
-
-        for(Ob z :list){
-            ArrayList<String> listTags= printTag(z);
-
-            for(String x: listTags){
-                    if(!allTags.contains(x))
-                        allTags.add(x);
-            }
-        }
-
-        for(String p:allTags)
-         Log.d("Tags",p);
 
 
 
@@ -211,6 +203,64 @@ public class firstPage extends AppCompatActivity {
             }
         });
 
+
+        //search photo
+        search = (AutoCompleteTextView) findViewById(R.id.s);
+
+        ArrayList<String> allTags=new ArrayList<String>();
+
+        for(Ob z :Global.list){
+            ArrayList<String> listTags= printTag(z);
+
+            for(String x: listTags){
+                if(!allTags.contains(x))
+                    allTags.add(x);
+            }
+        }
+
+        for(String p:allTags)
+            Log.d("Tags",p);
+
+        ArrayAdapter<String> adapterSearch = new ArrayAdapter<String>(firstPage.this, android.R.layout.simple_dropdown_item_1line, allTags);
+        search.setThreshold(1);// number of characters to start the search
+        search.setAdapter(adapterSearch);
+
+        search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View view, int pos,long id) {
+                // String selected = (String)adapter.getItemAtPosition(pos);
+
+                String p = String.valueOf(search.getText());
+                Log.d("Name", p);
+                ArrayList<Ob> searchItem= new ArrayList<Ob>();
+
+                for(Ob z :Global.list){
+                    ArrayList<String> listTags= printTag(z);
+
+                    for(String x: listTags){
+                        if(x.compareTo(p)==0)
+                            searchItem.add(z);
+                    }
+                }
+
+                gridview.setAdapter(new ImageAdapter(getApplicationContext(),searchItem));
+            }
+
+        });
+
+        ImageView deletePath =(ImageView) findViewById(R.id.imageView3);
+        deletePath.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                search.setText("");
+                gridview.setAdapter(new ImageAdapter(getApplicationContext(),list));
+            }
+        });
+
+
+
+
+        //add photo
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -219,6 +269,7 @@ public class firstPage extends AppCompatActivity {
 
             }
         });
+
 
     }
 
@@ -289,14 +340,59 @@ public class firstPage extends AppCompatActivity {
         super.onResume();
        // ArrayList<Ob> list= new ArrayList<Ob>();
 
+        inFile=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)+"/data.txt");
+        if(inFile.exists()) {
+            Scanner in = null;
+            try {
+                in = new Scanner(inFile);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            if (in.hasNextLine()) {
+                //attenzione se viene salvato uno invio o uno spazio allora il file viene considerato pieno
+                nomeView.setText("");
+            }
+            else
+                nomeView.setText("Benvenuto in FindMe, questa applicazione ti permetterà di realizzare foto e inserirle all'interno");
+
+            in.close();
+        }
+        else
+            nomeView.setText("Benvenuto in FindMe, questa applicazione ti permetterà di realizzare foto e inserirle all'interno");
+
+
         try {
             list=printList();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
+        search.setText("");
+
         gridview.setAdapter(new ImageAdapter(getApplicationContext(),list));
         finalList = list;
+
+
+        //search photo
+        search = (AutoCompleteTextView) findViewById(R.id.s);
+
+        ArrayList<String> allTags=new ArrayList<String>();
+
+        for(Ob z :Global.list){
+            ArrayList<String> listTags= printTag(z);
+
+            for(String x: listTags){
+                if(!allTags.contains(x))
+                    allTags.add(x);
+            }
+        }
+
+        ArrayAdapter<String> adapterSearch = new ArrayAdapter<String>(firstPage.this, android.R.layout.simple_dropdown_item_1line, allTags);
+        search.setThreshold(1);// number of characters to start the search
+        search.setAdapter(adapterSearch);
+
+
+
 
     }
 

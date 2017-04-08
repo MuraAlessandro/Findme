@@ -13,23 +13,34 @@
     tools:context="com.example.ale.findme.firstPage"
     tools:showIn="@layout/activity_first_page"
     android:background="@drawable/background">
-
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <AutoCompleteTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/search"
+        android:id="@+id/s"
         android:hint="Cerca foto"
         android:paddingRight="5dp"
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
         android:inputType="textCapSentences"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginRight="40dp"
         android:backgroundTint="@color/colorPrimaryDark"
         android:maxLines="1"
         android:textSize="18dp" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/btn_dialog"
+        android:id="@+id/imageView3"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_alignBottom="@+id/s" />
+</RelativeLayout>
 
     <TextView
         android:layout_marginTop="60dp"
